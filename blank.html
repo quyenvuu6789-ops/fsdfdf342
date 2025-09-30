@@ -1,9 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Blank Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>support meta business</title>
+  <style>
+    body {
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#f0f2f5;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+    }
+    .card {
+      background:#fff;
+      border-radius:8px;
+      padding:24px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      max-width:520px;
+      line-height:1.6;
+    }
+    .card h3 {
+      margin:0 0 12px;
+      font-size:17px;
+      font-weight:700;
+      color:#111827;
+    }
+    .card p {
+      margin:6px 0;
+      font-size:14px;
+      color:#374151;
+    }
+    .card .muted {
+      color:#6b7280;
+      font-size:13px;
+      margin-top:10px;
+    }
+    .actions {
+      margin-top:16px;
+      text-align:right;
+    }
+    .btn {
+      background:#1877f2;
+      border:none;
+      color:#fff;
+      font-size:14px;
+      padding:8px 14px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    .btn:hover {
+      background:#166fe0;
+    }
+  </style>
 </head>
 <body>
+  <div class="card">
+    <h3>Cảm ơn bạn đã hoàn tất quá trình xác nhận danh tính.</h3>
+    <p>Chúng tôi đã tiếp nhận thông tin của bạn và sẽ tiến hành xem xét tài khoản Facebook.</p>
+    <p>Tài khoản của bạn đã bị một người dùng Facebook báo cáo là mạo danh một người nổi tiếng.</p>
+    <p>Chúng tôi sẽ cố gắng xem xét lại và cập nhật cho bạn trong thời gian sớm nhất.</p>
+    <p class="muted">Quá trình này có thể mất một vài giờ làm việc. Cảm ơn bạn đã kiên nhẫn.</p>
+
+    <div class="actions">
+      <button class="btn" onclick="window.location.href='https://www.facebook.com/'">Đóng</button>
+    </div>
+  </div>
 </body>
 </html>

